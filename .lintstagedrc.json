@@ -1,6 +1,7 @@
 {
   "*.ts": [
     "eslint 'src/**' --fix",
+    "npm run jest:staged",
     "git add"
   ]
 }
