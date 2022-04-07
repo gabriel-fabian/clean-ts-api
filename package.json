@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests",
-    "test:staged": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --silent --coverage=false --noStackTrace",
+    "test:integration": "npm test -- --watch -c jest-integration-config.js",
+    "test:staged": "npm test -- --findeRelatedTests",
+    "test:unit": "npm test -- --watch -c jest-unit-config.js",
+    "test:verbose": "jest --passWithNoTests",
     "prepare": "husky install && sh husky-add-hooks.sh"
   },
   "author": "",
