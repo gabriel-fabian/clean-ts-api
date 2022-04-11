@@ -4,7 +4,7 @@
     "esModuleInterop": true,
     "module": "commonjs",
     "outDir": "./dist",
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "target": "es2019"
   }
 }
