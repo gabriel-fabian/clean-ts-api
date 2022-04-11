@@ -28,5 +28,10 @@ export const MongoHelper = {
   async insertIntoAndRetrieve(collectionName: string, data: Object) {
     const { insertedId } = await this.insertInto(collectionName, data)
     return await this.findById(collectionName, insertedId)
+  },
+
+  map: (collection: any): any => {
+    const { _id, ...collectionWithoutId } = collection
+    return Object.assign({}, collectionWithoutId, { id: _id })
   }
 }
