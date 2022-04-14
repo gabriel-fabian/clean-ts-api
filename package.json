@@ -1,7 +1,7 @@
 {
-  "name": "clean-node-api",
-  "version": "0.0.1",
-  "description": "",
+  "name": "clean-ts-api",
+  "version": "0.1.0",
+  "description": "NodeJs Rest API and GraphQL using TDD, Clean Architecture, Typescript and Design Patterns",
   "main": "index.js",
   "scripts": {
     "start": "sucrase-node src/main/server.ts",
@@ -12,7 +12,7 @@
     "test:unit": "npm test -- -c jest-unit-config.js",
     "test:verbose": "jest --passWithNoTests"
   },
-  "author": "",
+  "author": "Gabriel Fabian",
   "license": "ISC",
   "devDependencies": {
     "@shelf/jest-mongodb": "^2.2.1",
