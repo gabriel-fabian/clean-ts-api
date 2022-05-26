@@ -47,5 +47,14 @@ describe('Account Routes', () => {
 
       expect(response.status).toBe(200)
     })
+
+    test('Return 200 on login', async () => {
+      const response = await request(app).post('/api/login').send({
+        email: 'gabriel.fabian@gmail.com',
+        password: '123'
+      })
+
+      expect(response.status).toBe(401)
+    })
   })
 })
