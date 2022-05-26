@@ -4,7 +4,9 @@
   "description": "NodeJs Rest API and GraphQL using TDD, Clean Architecture, Typescript and Design Patterns",
   "main": "index.js",
   "scripts": {
-    "start": "sucrase-node src/main/server.ts",
+    "start": "node dist/main/server.js",
+    "build": "rimraf dist && tsc",
+    "dev": "sucrase-node src/main/server.ts",
     "prepare": "husky install && sh husky-add-hooks.sh",
     "test": "jest --passWithNoTests --silent --coverage=false --noStackTrace",
     "test:integration": "npm test -- -c jest-integration-config.js",
@@ -34,6 +36,7 @@
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
+    "rimraf": "^3.0.2",
     "sucrase": "^3.21.0",
     "supertest": "^6.2.2",
     "ts-jest": "^27.1.4",
@@ -42,7 +45,6 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "express": "^4.17.3",
-    "fast-glob": "^3.2.11",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.5.0",
     "validator": "^13.7.0"
