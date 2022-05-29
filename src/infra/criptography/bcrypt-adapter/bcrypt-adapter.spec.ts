@@ -1,7 +1,7 @@
-import bcrypt from 'bcrypt'
+import bcryptjs from 'bcryptjs'
 import { BcryptAdapter } from './bcrypt-adapter'
 
-jest.mock('bcrypt', () => ({
+jest.mock('bcryptjs', () => ({
   async hash(): Promise<string> {
     return new Promise((resolve) => resolve('hash'))
   },
@@ -19,7 +19,7 @@ const makeSut = (): BcryptAdapter => {
 describe('Bcrypt Adapter', () => {
   test('Call hash with correct values', async () => {
     const sut = makeSut()
-    const hashSpy = jest.spyOn(bcrypt, 'hash')
+    const hashSpy = jest.spyOn(bcryptjs, 'hash')
     await sut.hash('any_value')
     expect(hashSpy).toHaveBeenLastCalledWith('any_value', salt)
   })
@@ -32,7 +32,7 @@ describe('Bcrypt Adapter', () => {
 
   test('Throw if hash throws', async () => {
     const sut = makeSut()
-    jest.spyOn(bcrypt, 'hash').mockImplementationOnce(() => {
+    jest.spyOn(bcryptjs, 'hash').mockImplementationOnce(() => {
       throw new Error()
     })
     const promise = sut.hash('any_value')
@@ -41,7 +41,7 @@ describe('Bcrypt Adapter', () => {
 
   test('Call compare with correct values', async () => {
     const sut = makeSut()
-    const compareSpy = jest.spyOn(bcrypt, 'compare')
+    const compareSpy = jest.spyOn(bcryptjs, 'compare')
     await sut.compare('any_value', 'any_hash')
     expect(compareSpy).toHaveBeenLastCalledWith('any_value', 'any_hash')
   })
@@ -54,7 +54,7 @@ describe('Bcrypt Adapter', () => {
 
   test('Return false when compare fails', async () => {
     const sut = makeSut()
-    jest.spyOn(bcrypt, 'compare').mockImplementationOnce(() => {
+    jest.spyOn(bcryptjs, 'compare').mockImplementationOnce(() => {
       return false
     })
     const isValid = await sut.compare('any_value', 'any_hash')
@@ -63,7 +63,7 @@ describe('Bcrypt Adapter', () => {
 
   test('Throw if compare throws', async () => {
     const sut = makeSut()
-    jest.spyOn(bcrypt, 'compare').mockImplementationOnce(() => {
+    jest.spyOn(bcryptjs, 'compare').mockImplementationOnce(() => {
       throw new Error()
     })
     const promise = sut.compare('any_value', 'any_hash')
