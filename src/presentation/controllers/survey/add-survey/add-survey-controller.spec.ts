@@ -12,6 +12,16 @@ const makeValidation = (): Validation => {
   return new ValidationStub()
 }
 
+const makeFakeRequest = (): HttpRequest => ({
+  body: {
+    question: 'any_question',
+    answers: [{
+      image: 'any_image',
+      answer: 'any_answer'
+    }]
+  }
+})
+
 interface SutTypes {
   sut: AddSurveyController
   validationStub: Validation
@@ -28,16 +38,6 @@ const makeSut = (): SutTypes => {
 }
 
 describe('AddSurvey Controller', () => {
-  const makeFakeRequest = (): HttpRequest => ({
-    body: {
-      question: 'any_question',
-      answers: [{
-        image: 'any_image',
-        answer: 'any_answer'
-      }]
-    }
-  })
-
   test('Call Validation with correct values', async () => {
     const { sut, validationStub } = makeSut()
     const validateSpy = jest.spyOn(validationStub, 'validate')
