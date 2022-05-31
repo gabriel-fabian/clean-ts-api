@@ -17,56 +17,60 @@ const makeSut = (): BcryptAdapter => {
 }
 
 describe('Bcrypt Adapter', () => {
-  test('Call hash with correct values', async () => {
-    const sut = makeSut()
-    const hashSpy = jest.spyOn(bcryptjs, 'hash')
-    await sut.hash('any_value')
-    expect(hashSpy).toHaveBeenLastCalledWith('any_value', salt)
-  })
-
-  test('Return a valid hash on hash succes', async () => {
-    const sut = makeSut()
-    const hash = await sut.hash('any_value')
-    expect(hash).toBe('hash')
-  })
-
-  test('Throw if hash throws', async () => {
-    const sut = makeSut()
-    jest.spyOn(bcryptjs, 'hash').mockImplementationOnce(() => {
-      throw new Error()
+  describe('hash()', () => {
+    test('Call hash with correct values', async () => {
+      const sut = makeSut()
+      const hashSpy = jest.spyOn(bcryptjs, 'hash')
+      await sut.hash('any_value')
+      expect(hashSpy).toHaveBeenLastCalledWith('any_value', salt)
     })
-    const promise = sut.hash('any_value')
-    await expect(promise).rejects.toThrow()
-  })
 
-  test('Call compare with correct values', async () => {
-    const sut = makeSut()
-    const compareSpy = jest.spyOn(bcryptjs, 'compare')
-    await sut.compare('any_value', 'any_hash')
-    expect(compareSpy).toHaveBeenLastCalledWith('any_value', 'any_hash')
-  })
-
-  test('Return true when compare succeeds', async () => {
-    const sut = makeSut()
-    const isValid = await sut.compare('any_value', 'any_hash')
-    expect(isValid).toBe(true)
-  })
-
-  test('Return false when compare fails', async () => {
-    const sut = makeSut()
-    jest.spyOn(bcryptjs, 'compare').mockImplementationOnce(() => {
-      return false
+    test('Return a valid hash on hash succes', async () => {
+      const sut = makeSut()
+      const hash = await sut.hash('any_value')
+      expect(hash).toBe('hash')
     })
-    const isValid = await sut.compare('any_value', 'any_hash')
-    expect(isValid).toBe(false)
+
+    test('Throw if hash throws', async () => {
+      const sut = makeSut()
+      jest.spyOn(bcryptjs, 'hash').mockImplementationOnce(() => {
+        throw new Error()
+      })
+      const promise = sut.hash('any_value')
+      await expect(promise).rejects.toThrow()
+    })
   })
 
-  test('Throw if compare throws', async () => {
-    const sut = makeSut()
-    jest.spyOn(bcryptjs, 'compare').mockImplementationOnce(() => {
-      throw new Error()
+  describe('compare()', () => {
+    test('Call compare with correct values', async () => {
+      const sut = makeSut()
+      const compareSpy = jest.spyOn(bcryptjs, 'compare')
+      await sut.compare('any_value', 'any_hash')
+      expect(compareSpy).toHaveBeenLastCalledWith('any_value', 'any_hash')
     })
-    const promise = sut.compare('any_value', 'any_hash')
-    await expect(promise).rejects.toThrow()
+
+    test('Return true when compare succeeds', async () => {
+      const sut = makeSut()
+      const isValid = await sut.compare('any_value', 'any_hash')
+      expect(isValid).toBe(true)
+    })
+
+    test('Return false when compare fails', async () => {
+      const sut = makeSut()
+      jest.spyOn(bcryptjs, 'compare').mockImplementationOnce(() => {
+        return false
+      })
+      const isValid = await sut.compare('any_value', 'any_hash')
+      expect(isValid).toBe(false)
+    })
+
+    test('Throw if compare throws', async () => {
+      const sut = makeSut()
+      jest.spyOn(bcryptjs, 'compare').mockImplementationOnce(() => {
+        throw new Error()
+      })
+      const promise = sut.compare('any_value', 'any_hash')
+      await expect(promise).rejects.toThrow()
+    })
   })
 })
