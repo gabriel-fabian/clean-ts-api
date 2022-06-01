@@ -74,4 +74,12 @@ describe('Survey Routes', () => {
       expect(response.status).toBe(204)
     })
   })
+
+  describe('GET /surveys', () => {
+    test('Return 403 on load surveys without accessToken', async () => {
+      const response = await request(app).get('/api/surveys')
+
+      expect(response.status).toBe(403)
+    })
+  })
 })
