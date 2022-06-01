@@ -39,39 +39,39 @@ describe('Survey Routes', () => {
 
       expect(response.status).toBe(403)
     })
-  })
 
-  test('Return 204 on add survey with valid accessToken', async () => {
-    const { _id: id } = await MongoHelper.insertIntoAndRetrieve('accounts', {
-      name: 'any_name',
-      email: 'any_email@mail.com',
-      password: 'any_password',
-      role: 'admin'
-    })
-    const accessToken = sign({ id }, env.jwtSecret)
+    test('Return 204 on add survey with valid accessToken', async () => {
+      const { _id: id } = await MongoHelper.insertIntoAndRetrieve('accounts', {
+        name: 'any_name',
+        email: 'any_email@mail.com',
+        password: 'any_password',
+        role: 'admin'
+      })
+      const accessToken = sign({ id }, env.jwtSecret)
 
-    await accountCollection.updateOne({
-      _id: id
-    }, {
-      $set: {
-        accessToken: accessToken
-      }
-    })
-
-    const response = await request(app)
-      .post('/api/surveys')
-      .set('x-access-token', accessToken)
-      .send({
-        question: 'Question',
-        answers: [{
-          answer: 'Answer 1',
-          image: 'http://image-name.com'
-        }, {
-          answer: 'Answer 1',
-          image: 'http://image-name.com'
-        }]
+      await accountCollection.updateOne({
+        _id: id
+      }, {
+        $set: {
+          accessToken: accessToken
+        }
       })
 
-    expect(response.status).toBe(204)
+      const response = await request(app)
+        .post('/api/surveys')
+        .set('x-access-token', accessToken)
+        .send({
+          question: 'Question',
+          answers: [{
+            answer: 'Answer 1',
+            image: 'http://image-name.com'
+          }, {
+            answer: 'Answer 1',
+            image: 'http://image-name.com'
+          }]
+        })
+
+      expect(response.status).toBe(204)
+    })
   })
 })
