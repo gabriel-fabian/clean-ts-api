@@ -1,12 +1,32 @@
 import { Collection } from 'mongodb'
-import request from 'supertest'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
-import app from '../config/app'
 import { sign } from 'jsonwebtoken'
+import app from '../config/app'
 import env from '../config/env'
+import request from 'supertest'
 
 let surveyCollection: Collection
 let accountCollection: Collection
+
+const makeAccessToken = async (): Promise<string> => {
+  const { _id: id } = await MongoHelper.insertIntoAndRetrieve('accounts', {
+    name: 'any_name',
+    email: 'any_email@mail.com',
+    password: 'any_password',
+    role: 'admin'
+  })
+  const accessToken = sign({ id }, env.jwtSecret)
+
+  await accountCollection.updateOne({
+    _id: id
+  }, {
+    $set: {
+      accessToken: accessToken
+    }
+  })
+
+  return accessToken
+}
 
 describe('Survey Routes', () => {
   beforeAll(async () => {
@@ -41,23 +61,9 @@ describe('Survey Routes', () => {
     })
 
     test('Return 204 on add survey with valid accessToken', async () => {
-      const { _id: id } = await MongoHelper.insertIntoAndRetrieve('accounts', {
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: 'any_password',
-        role: 'admin'
-      })
-      const accessToken = sign({ id }, env.jwtSecret)
+      const accessToken = await makeAccessToken()
 
-      await accountCollection.updateOne({
-        _id: id
-      }, {
-        $set: {
-          accessToken: accessToken
-        }
-      })
-
-      const response = await request(app)
+      await request(app)
         .post('/api/surveys')
         .set('x-access-token', accessToken)
         .send({
@@ -66,12 +72,10 @@ describe('Survey Routes', () => {
             answer: 'Answer 1',
             image: 'http://image-name.com'
           }, {
-            answer: 'Answer 1',
-            image: 'http://image-name.com'
+            answer: 'Answer 2'
           }]
         })
-
-      expect(response.status).toBe(204)
+        .expect(204)
     })
   })
 
@@ -82,35 +86,13 @@ describe('Survey Routes', () => {
       expect(response.status).toBe(403)
     })
 
-    test('Return 200 on load surveys with valid accessToken', async () => {
-      const { _id: id } = await MongoHelper.insertIntoAndRetrieve('accounts', {
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: 'any_password'
-      })
-      const accessToken = sign({ id }, env.jwtSecret)
-
-      await accountCollection.updateOne({
-        _id: id
-      }, {
-        $set: {
-          accessToken: accessToken
-        }
-      })
-
-      await surveyCollection.insertOne({
-        question: 'any_question',
-        answers: [{
-          image: 'any_image',
-          answer: 'any_answer'
-        }],
-        date: new Date()
-      })
+    test('Return 204 on load surveys with valid accessToken', async () => {
+      const accessToken = await makeAccessToken()
 
       await request(app)
         .get('/api/surveys')
         .set('x-access-token', accessToken)
-        .expect(200)
+        .expect(204)
     })
   })
 })
