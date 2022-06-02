@@ -1,6 +1,6 @@
 {
   "name": "clean-ts-api",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "NodeJs Rest API and GraphQL using TDD, Clean Architecture, Typescript and Design Patterns",
   "main": "index.js",
   "scripts": {
