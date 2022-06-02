@@ -25,5 +25,6 @@ services:
       - ./src/:/usr/src/clean-node-api/src/
       - ./package.json:/usr/src/clean-node-api/package.json
       - ./tsconfig.json:/usr/src/clean-node-api/tsconfig.json
+      - ./tsconfig-build.json:/usr/src/clean-node-api/tsconfig-build.json
     depends_on:
       - mongo

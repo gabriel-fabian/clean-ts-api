@@ -2,7 +2,7 @@ FROM node:16.15-alpine as builder
 
 WORKDIR /app
 
-COPY package.json tsconfig.json ./
+COPY package.json tsconfig.json tsconfig-build.json ./
 COPY /src ./src
 
 RUN npm install --ignore-scripts && npm run build
