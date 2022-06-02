@@ -1,7 +1,7 @@
+import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
+import app from '@/main/config/app'
 import { hash } from 'bcryptjs'
 import request from 'supertest'
-import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
-import app from '../config/app'
 
 describe('Account Routes', () => {
   beforeAll(async () => {
