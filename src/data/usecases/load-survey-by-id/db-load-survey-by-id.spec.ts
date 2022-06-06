@@ -48,7 +48,7 @@ describe('DbLoadSurveyById', () => {
     MockDate.reset()
   })
 
-  test('Call LoadSurveysRepository', async () => {
+  test('Call LoadSurveyByIdRepository', async () => {
     const { sut, loadSurveyByIdRepositoryStub } = makeSut()
     const loadByIdSpy = jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById')
     await sut.loadById('any_id')
