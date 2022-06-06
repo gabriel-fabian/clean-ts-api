@@ -20,7 +20,7 @@ export const MongoHelper = {
     return await collection.insertOne(data)
   },
 
-  async findById(collectionName: string, id: number) {
+  async findById(collectionName: string, id: any) {
     const collection = this.getCollection(collectionName)
     return await collection.findOne(id)
   },
