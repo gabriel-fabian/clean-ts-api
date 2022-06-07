@@ -30,15 +30,18 @@ export const MongoHelper = {
     return await this.findById(collectionName, insertedId)
   },
 
-  map: (collection: any): any => {
-    if (Array.isArray(collection)) {
-      return collection.map(entry => {
-        const { _id, ...entryWithoudId } = entry
-        return Object.assign({}, entryWithoudId, { id: _id })
+  map: (data: any): any => {
+    if (Array.isArray(data)) {
+      return data.map(entry => {
+        return MongoHelper.idMapper(entry)
       })
     } else {
-      const { _id, ...collectionWithoutId } = collection
-      return Object.assign({}, collectionWithoutId, { id: _id })
+      return MongoHelper.idMapper(data)
     }
+  },
+
+  idMapper(data: any): any {
+    const { _id, ...collectionWithoutId } = data
+    return Object.assign({}, collectionWithoutId, { id: _id })
   }
 }

@@ -42,7 +42,7 @@ describe('Survey Mongo Repository', () => {
   })
 
   describe('loadAll()', () => {
-    test('Add a survey on success', async () => {
+    test('Load surveys on success', async () => {
       await surveyCollection.insertMany([{
         question: 'any_question',
         answers: [{
