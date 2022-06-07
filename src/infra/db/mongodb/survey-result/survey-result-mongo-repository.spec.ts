@@ -71,4 +71,27 @@ describe('Survey Mongo Repository', () => {
       expect(surveyResult.answer).toBe(survey.answers[0].answer)
     })
   })
+
+  test('Update survey result if its not new', async () => {
+    const survey = await makeSurvey()
+    const account = await makeAccount()
+    const res = await MongoHelper.insertIntoAndRetrieve('surveyResults', {
+      surveyId: survey.id,
+      accountId: account.id,
+      answer: survey.answers[0].answer,
+      date: new Date()
+    })
+    const sut = makeSut()
+    const surveyResult = await sut.save({
+      surveyId: survey.id,
+      accountId: account.id,
+      answer: survey.answers[1].answer,
+      date: new Date()
+    })
+
+    console.log(surveyResult)
+    expect(true).toBeTruthy()
+    expect(surveyResult.id).toEqual(res._id)
+    expect(surveyResult.answer).toBe(survey.answers[1].answer)
+  })
 })
