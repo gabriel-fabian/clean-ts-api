@@ -52,8 +52,7 @@ describe('Survey Routes', () => {
           answer: 'Answer 1',
           image: 'http://image-name.com'
         }, {
-          answer: 'Answer 1',
-          image: 'http://image-name.com'
+          answer: 'Answer 2'
         }]
       })
 
