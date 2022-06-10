@@ -1,6 +1,7 @@
 import { AccountMongoRepository } from './account-mongo-repository'
-import { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
+import { mockAddAccountParams } from '@/domain/test'
+import { Collection } from 'mongodb'
 
 let accountCollection: Collection
 
@@ -25,11 +26,7 @@ describe('Account Mongo Repository', () => {
   describe('add()', () => {
     test('Return an account on add succes', async () => {
       const sut = makeSut()
-      const account = await sut.add({
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: 'any_password'
-      })
+      const account = await sut.add(mockAddAccountParams())
       expect(account).toBeTruthy()
       expect(account.id).toBeTruthy()
       expect(account.name).toBe('any_name')
@@ -41,11 +38,7 @@ describe('Account Mongo Repository', () => {
   describe('loadByEmail()', () => {
     test('Return an account on loadByEmail success', async () => {
       const sut = makeSut()
-      await accountCollection.insertOne({
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: 'any_password'
-      })
+      await accountCollection.insertOne(mockAddAccountParams())
       const account = await sut.loadByEmail('any_email@mail.com')
       expect(account).toBeTruthy()
       expect(account.id).toBeTruthy()
@@ -64,11 +57,7 @@ describe('Account Mongo Repository', () => {
   describe('updateAccessToken()', () => {
     test('Update the account accessToken on updateAccessToken success', async () => {
       const sut = makeSut()
-      const account = await MongoHelper.insertIntoAndRetrieve('accounts', {
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: 'any_password'
-      })
+      const account = await MongoHelper.insertIntoAndRetrieve('accounts', mockAddAccountParams())
       expect(account.accessToken).toBeFalsy()
       await sut.updateAccessToken(account._id, 'any_token')
       const updatedAccount = await MongoHelper.findById('accounts', account._id)
