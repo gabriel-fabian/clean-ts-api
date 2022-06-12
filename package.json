@@ -1,6 +1,6 @@
 {
   "name": "clean-ts-api",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "NodeJs Rest API and GraphQL using TDD, Clean Architecture, Typescript and Design Patterns",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "test:verbose": "jest --passWithNoTests"
   },
   "author": "Gabriel Fabian",
-  "license": "ISC",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@shelf/jest-mongodb": "^2.2.1",
     "@types/bcryptjs": "^2.4.2",
