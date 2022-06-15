@@ -85,5 +85,26 @@ describe('Survey Routes', () => {
         .get('/api/surveys/any_id/results')
         .expect(403)
     })
+
+    test('Return 200 on load survey with accessToken', async () => {
+      const accessToken = await makeAccessToken()
+      const survey: SurveyModel = MongoHelper.map(
+        await MongoHelper.insertIntoAndRetrieve('surveys', {
+          question: 'Question',
+          answers: [{
+            answer: 'Answer 1',
+            image: 'http://image-name.com'
+          }, {
+            answer: 'Answer 2'
+          }],
+          date: new Date()
+        })
+      )
+
+      await request(app)
+        .get(`/api/surveys/${survey.id}/results`)
+        .set('x-access-token', accessToken)
+        .expect(200)
+    })
   })
 })
