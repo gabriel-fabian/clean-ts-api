@@ -7,7 +7,7 @@ export default {
   info: {
     title: 'Clean Node Api',
     description: 'API para realizar enquetes entre programadores',
-    version: '0.7.0'
+    version: '1.0.0'
   },
   license: {
     name: 'GPL-3.0-or-later',
