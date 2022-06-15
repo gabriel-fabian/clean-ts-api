@@ -53,29 +53,29 @@ describe('Survey Routes', () => {
         })
         .expect(403)
     })
-  })
 
-  test('Return 200 on save survey with accessToken', async () => {
-    const accessToken = await makeAccessToken()
-    const survey: SurveyModel = MongoHelper.map(
-      await MongoHelper.insertIntoAndRetrieve('surveys', {
-        question: 'Question',
-        answers: [{
-          answer: 'Answer 1',
-          image: 'http://image-name.com'
-        }, {
-          answer: 'Answer 2'
-        }],
-        date: new Date()
-      })
-    )
+    test('Return 200 on save survey with accessToken', async () => {
+      const accessToken = await makeAccessToken()
+      const survey: SurveyModel = MongoHelper.map(
+        await MongoHelper.insertIntoAndRetrieve('surveys', {
+          question: 'Question',
+          answers: [{
+            answer: 'Answer 1',
+            image: 'http://image-name.com'
+          }, {
+            answer: 'Answer 2'
+          }],
+          date: new Date()
+        })
+      )
 
-    await request(app)
-      .put(`/api/surveys/${survey.id}/results`)
-      .set('x-access-token', accessToken)
-      .send({
-        answer: 'Answer 1'
-      })
-      .expect(200)
+      await request(app)
+        .put(`/api/surveys/${survey.id}/results`)
+        .set('x-access-token', accessToken)
+        .send({
+          answer: 'Answer 1'
+        })
+        .expect(200)
+    })
   })
 })
