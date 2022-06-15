@@ -36,13 +36,6 @@ export class QueryBuilder {
     return this
   }
 
-  addFields(data: Object): QueryBuilder {
-    this.query.push({
-      $addFields: data
-    })
-    return this
-  }
-
   project(data: Object): QueryBuilder {
     this.query.push({
       $project: data
