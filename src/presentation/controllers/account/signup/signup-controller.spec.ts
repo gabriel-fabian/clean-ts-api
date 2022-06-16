@@ -9,6 +9,7 @@ import { EmailInUseError, MissingParamError, ServerError } from '@/presentation/
 import { ok, badRequest, serverError, forbidden } from '@/presentation/helpers/http/http-helper'
 import { mockValidation } from '@/validation/test'
 import { mockAddAccount, mockAuthentication } from '@/presentation/test'
+import { mockAuthenticationModel } from '@/domain/test/mock-authentication'
 
 const mockRequest = (): HttpRequest => ({
   body: {
@@ -111,6 +112,6 @@ describe('SignUp Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(mockRequest())
 
-    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
+    expect(httpResponse).toEqual(ok(mockAuthenticationModel()))
   })
 })

@@ -13,6 +13,7 @@ import {
   ok
 } from '@/presentation/helpers/http/http-helper'
 import { mockValidation } from '@/validation/test'
+import { mockAuthenticationModel } from '@/domain/test/mock-authentication'
 
 const mockRequest = (): HttpRequest => ({
   body: {
@@ -70,7 +71,7 @@ describe('Login Controller', () => {
     const { sut } = makeSut()
 
     const httpResponse = await sut.handle(mockRequest())
-    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
+    expect(httpResponse).toEqual(ok(mockAuthenticationModel()))
   })
 
   test('Call Validation with correct values', async () => {
