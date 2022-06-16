@@ -11,11 +11,11 @@
     "up": "docker-compose up -d",
     "down": "docker-compose down",
     "prepare": "husky install",
-    "test": "jest --passWithNoTests --silent --coverage=false --noStackTrace",
-    "test:integration": "npm test -- -c jest-integration-config.js",
-    "test:staged": "npm test -- --findRelatedTests",
-    "test:unit": "npm test -- -c jest-unit-config.js",
-    "test:verbose": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests --silent --coverage=false --noStackTrace --runInBand",
+    "test:integration": "npm test -- -c jest-integration-config.js --runInBand",
+    "test:staged": "npm test -- --findRelatedTests --runInBand",
+    "test:unit": "npm test -- -c jest-unit-config.js --runInBand",
+    "test:verbose": "jest --passWithNoTests --runInBand"
   },
   "author": "Gabriel Fabian",
   "license": "GPL-3.0-or-later",
