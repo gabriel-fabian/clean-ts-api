@@ -13,8 +13,12 @@ export const surveySchema = {
         $ref: '#/schemas/surveyAnswer'
       }
     },
+    didAnswer: {
+      type: 'boolean'
+    },
     date: {
       type: 'string'
     }
-  }
+  },
+  required: ['id', 'question', 'answers', 'date', 'didAnswer']
 }
