@@ -46,7 +46,7 @@ describe('DbSaveSurveyResult UseCase', () => {
     const surveyResultData = mockSaveSurveyResultParams()
     await sut.save(surveyResultData)
 
-    expect(loadBySurveyIdSpy).toHaveBeenCalledWith(surveyResultData.surveyId)
+    expect(loadBySurveyIdSpy).toHaveBeenCalledWith(surveyResultData.surveyId, surveyResultData.accountId)
   })
 
   test('Return a SurveyResult on success', async () => {
